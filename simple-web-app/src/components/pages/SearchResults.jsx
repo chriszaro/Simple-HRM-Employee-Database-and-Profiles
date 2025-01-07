@@ -16,18 +16,14 @@ const SearchResults = () => {
     const keyword = sanitizeInput(searchParams.get('keyword'));
 
     const fetchUsers = async () => {
-        try {
-            const response =
-                await axios.get(`http://localhost:8080/api/users/search?keyword=${keyword}`, {
-                    headers: {
-                        'Authorization': `Basic ${localStorage.getItem('basicToken')}`
-                    },
-                });
-            setUsers(response.data);
-            //console.log(response.data);
-        } catch (error) {
-            console.error("Error fetching users...", error);
-        }
+        await axios
+            .get(`http://localhost:8080/api/users/search?keyword=${keyword}`, {
+                headers: {
+                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                },
+            })
+            .then((res) => setUsers(res.data))
+            .catch((error) => console.error("Error fetching users...", error))
     }
 
     const navigate = useNavigate();
@@ -45,7 +41,7 @@ const SearchResults = () => {
                 <>
                     <Nav direction="row"/>
                     <h2>Search Results for {keyword}</h2>
-                    <UserTable data={users}/>
+                    <UserTable data={users} refreshData={fetchUsers}/>
                 </>
             ) : null}
         </>

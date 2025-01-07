@@ -8,19 +8,18 @@ const DisplayUsers = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
-        try {
-            const response = await axios.get("http://localhost:8080/api/users",
+        await axios
+            .get("http://localhost:8080/api/users",
                 {
                     headers: {
                         'Authorization': `Basic ${localStorage.getItem('basicToken')}`
                     }
                 }
-            );
-            setUsers(response.data);
-            //console.log(response.data);
-        } catch (error) {
-            console.error("Error fetching users...", error);
-        }
+            )
+            .then(res => setUsers(res.data))
+            .catch((error) => {
+                console.error("Error fetching users...", error);
+            });
     }
     useEffect(() => {
         if (localStorage.getItem("basicToken") == null) {
@@ -36,7 +35,7 @@ const DisplayUsers = () => {
                 <>
                     <Nav direction="row"/>
                     <h2>Users</h2>
-                    <UserTable data={users}/>
+                    <UserTable data={users} refreshData={fetchUsers}/>
                 </>
             ) : null}
         </>

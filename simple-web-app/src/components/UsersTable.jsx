@@ -2,7 +2,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
-const UsersTable = ({data}) => {
+const UsersTable = ({data, refreshData}) => {
     const [users, setUsers] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [userToDeleteId, setUserToDeleteId] = useState(null);
@@ -22,22 +22,19 @@ const UsersTable = ({data}) => {
     }
 
     const handleDelete = async () => {
-        try {
-            await axios.delete(`http://localhost:8080/api/users/${userToDeleteId}`, {
-                headers: {
-                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
-                },
-            });
-            // console.log("Product deleted successfully");
-            // alert("Product deleted successfully");
+        await axios.delete(`http://localhost:8080/api/users/${userToDeleteId}`, {
+            headers: {
+                'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+            },
+        }).then(() => {
+            refreshData();
             setIsOpen(false);
             setUserToDeleteId(null);
             setUserToDelete(null);
-        } catch (error) {
-            console.error("Error deleting product:", error);
-        }
+        }).catch((error) => {
+            console.error("Error deleting user:", error);
+        });
     };
-
 
     return (
         <>
