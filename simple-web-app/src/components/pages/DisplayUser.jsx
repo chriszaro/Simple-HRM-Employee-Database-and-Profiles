@@ -7,6 +7,7 @@ const DisplayUser = () => {
     const {id} = useParams();
     const [user, setUser] = useState([]);
     const [address, setAddress] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -19,6 +20,7 @@ const DisplayUser = () => {
                 .then((response) => {
                     setUser(response.data);
                     setAddress(response.data.address);
+                    setLoading(false);
                 }).catch((error) => console.error("Error fetching users...", error))
         }
 
@@ -75,56 +77,60 @@ const DisplayUser = () => {
         <>{localStorage.getItem("basicToken") != null ? (<>
             <Nav direction="row"/>
             <h2>User Profile</h2>
-            <table className="center text-left">
-                <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>{user.name}</td>
-                </tr>
-                <tr>
-                    <th>Surname</th>
-                    <td>{user.surname}</td>
-                </tr>
-                <tr>
-                    <th>Gender</th>
-                    <td>{(user.gender == 0) ? "M" : "F"}</td>
-                </tr>
-                <tr>
-                    <th>Birthday</th>
-                    <td>{new Date(user.birthday).toLocaleDateString('en-GB', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    }).replaceAll('/', '-')}</td>
-                </tr>
-                <tr>
-                    <th>Work Address</th>
-                    <td><input
-                        type="text"
-                        value={address.workAddress ? address.workAddress : ''}
-                        onChange={handleAddressInputChange}
-                        name="workAddress"
-                        id="workAddress"
-                    ></input></td>
-                </tr>
-                <tr>
-                    <th>Home Address</th>
-                    <td><input
-                        type="text"
-                        value={address.homeAddress ? address.homeAddress : ''}
-                        onChange={handleAddressInputChange}
-                        name="homeAddress"
-                        id="homeAddress"
-                    ></input></td>
-                </tr>
-                </tbody>
-            </table>
-            <button onClick={updateUser}
-                    style={{margin: '1em'}}>Update
-            </button>
-            <button onClick={deleteUser}
-                    className="deleteButton">Delete
-            </button>
+            {!loading && (
+                <>
+                    <table className="center text-left">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{user.name}</td>
+                        </tr>
+                        <tr>
+                            <th>Surname</th>
+                            <td>{user.surname}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{(user.gender == 0) ? "M" : "F"}</td>
+                        </tr>
+                        <tr>
+                            <th>Birthday</th>
+                            <td>{new Date(user.birthday).toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric'
+                            }).replaceAll('/', '-')}</td>
+                        </tr>
+                        <tr>
+                            <th>Work Address</th>
+                            <td><input
+                                type="text"
+                                value={address.workAddress ? address.workAddress : ''}
+                                onChange={handleAddressInputChange}
+                                name="workAddress"
+                                id="workAddress"
+                            ></input></td>
+                        </tr>
+                        <tr>
+                            <th>Home Address</th>
+                            <td><input
+                                type="text"
+                                value={address.homeAddress ? address.homeAddress : ''}
+                                onChange={handleAddressInputChange}
+                                name="homeAddress"
+                                id="homeAddress"
+                            ></input></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button onClick={updateUser}
+                            style={{margin: '1em'}}>Update
+                    </button>
+                    <button onClick={deleteUser}
+                            className="deleteButton">Delete
+                    </button>
+                </>
+            )}
         </>) : null}</>
     )
 }
