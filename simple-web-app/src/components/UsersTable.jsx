@@ -2,6 +2,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 const UsersTable = ({data, refreshData}) => {
     const [users, setUsers] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
