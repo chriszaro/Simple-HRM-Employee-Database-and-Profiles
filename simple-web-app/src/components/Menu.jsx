@@ -16,6 +16,10 @@ export default function Menu(props) {
                 <Link to="/add_user">
                     <button className="menuButton">Register new user</button>
                 </Link>
+
+                <Link to="/logout">
+                    <button className="menuButton">Logout</button>
+                </Link>
             </div>
         </>
     )
