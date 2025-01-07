@@ -10,42 +10,34 @@ const DisplayUser = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            try {
-                const response =
-                    await axios.get(`http://localhost:8080/api/users/${id}`, {
-                        headers: {
-                            'Authorization': `Basic ${localStorage.getItem('basicToken')}`
-                        },
-                    });
-                setUser(response.data);
-                setAddress(response.data.address);
-                //console.log(response.data);
-            } catch (error) {
-                console.error("Error fetching users...", error);
-            }
+            await axios
+                .get(`http://localhost:8080/api/users/${id}`, {
+                    headers: {
+                        'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                    },
+                })
+                .then((response) => {
+                    setUser(response.data);
+                    setAddress(response.data.address);
+                }).catch((error) => console.error("Error fetching users...", error))
         }
 
         if (localStorage.getItem("basicToken") == null) {
             navigate("/login");
-        }
-        else fetchUser();
+        } else fetchUser();
     }, [])
 
     const navigate = useNavigate();
 
     const deleteUser = async () => {
-        try {
-            await axios.delete(`http://localhost:8080/api/users/${id}`, {
+        await axios
+            .delete(`http://localhost:8080/api/users/${id}`, {
                 headers: {
                     'Authorization': `Basic ${localStorage.getItem('basicToken')}`
                 },
-            });
-            // console.log("Product deleted successfully");
-            // alert("Product deleted successfully");
-            navigate('/users');
-        } catch (error) {
-            console.error("Error deleting product:", error);
-        }
+            })
+            .then(() => navigate('/users'))
+            .catch((error) => console.error("Error deleting user:", error));
     };
 
     const updateUser = async () => {
@@ -55,19 +47,15 @@ const DisplayUser = () => {
             new Blob([JSON.stringify(user)], {type: "application/json"})
         );
 
-        try {
-            await axios
-                .put("http://localhost:8080/api/users", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        'Authorization': `Basic ${localStorage.getItem('basicToken')}`
-                    },
-                });
-            //console.log("Product updated successfully");
-            alert("Product updated successfully");
-        } catch (error) {
-            console.error("Error updating product:", error);
-        }
+        await axios
+            .put("http://localhost:8080/api/users", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                },
+            }).then(() => alert("User Profile updated successfully"))
+            .catch((error) => console.error("Error updating user profile:", error));
+
     };
 
     const handleAddressInputChange = (e) => {
@@ -129,32 +117,6 @@ const DisplayUser = () => {
                         id="homeAddress"
                     ></input></td>
                 </tr>
-                {/*<tr>*/}
-                {/*        <th>Name</th>*/}
-                {/*        <th>Surname</th>*/}
-                {/*        <th>Gender</th>*/}
-                {/*        <th>Birthday</th>*/}
-                {/*        <th>Work Address</th>*/}
-                {/*        <th>Home Address</th>*/}
-                {/*        <th></th>*/}
-                {/*    </tr>*/}
-                {/*    <tr>*/}
-                {/*        <td>{user.name}</td>*/}
-                {/*        <td>{user.surname}</td>*/}
-                {/*        <td>{(user.gender == 0) ? "M" : "F"}</td>*/}
-                {/*        <td>{new Date(user.birthday).toLocaleDateString('en-GB', {*/}
-                {/*            day: '2-digit',*/}
-                {/*            month: '2-digit',*/}
-                {/*            year: 'numeric'*/}
-                {/*        }).replaceAll('/', '-')}</td>*/}
-                {/*        <td>{address.workAddress}</td>*/}
-                {/*        <td>{address.homeAddress}</td>*/}
-                {/*        <td>*/}
-                {/*            <Link to={`/users`}>*/}
-                {/*                <button onClick={deleteUser}>Delete</button>*/}
-                {/*            </Link>*/}
-                {/*        </td>*/}
-                {/*    </tr>*/}
                 </tbody>
             </table>
             <button onClick={updateUser}

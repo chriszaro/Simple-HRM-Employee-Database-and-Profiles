@@ -47,9 +47,8 @@ export default function Login() {
                 navigate('/');
             })
             .catch((error) => {
-                console.error("Error adding user", error);
                 console.log(JSON.stringify(credentials));
-                alert("Error adding user");
+                alert("Wrong credentials");
             })
     }
 

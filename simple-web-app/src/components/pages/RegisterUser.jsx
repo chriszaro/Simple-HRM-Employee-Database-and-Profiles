@@ -109,15 +109,10 @@ const RegisterUser = () => {
                     'Authorization': `Basic ${localStorage.getItem('basicToken')}`
                 },
             })
-            // eslint-disable-next-line no-unused-vars
-            .then((response) => {
-                // console.log("User added successfully", response.data);
-                // console.log(JSON.stringify(user));
-                // alert("User added successfully");
+            .then(() => {
                 navigate('/users');
             })
-            .catch((error) => {
-                console.error("Error adding user", error);
+            .catch(() => {
                 console.log(JSON.stringify(user));
                 alert("Error adding user");
             })
