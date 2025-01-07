@@ -2,6 +2,9 @@ package com.example.SimpleWebApp.model;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -32,11 +35,16 @@ public class User {
     // JPA does not offer restrict
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="fk_addr_id", referencedColumnName = "addr_id")
+    @Valid
     private Address address;
 
     @Column(name = "Name")
+    @Size(min=2, message="Name has to be at least 2 characters")
+    @Pattern(regexp = "^[A-Za-z]+ ?-? ?[A-Za-z]*$")
     private String name;
     @Column(name = "Surname")
+    @Size(min=2, message="Surname has to be at least 2 characters")
+    @Pattern(regexp = "^[A-Za-z]+ ?-? ?[A-Za-z]*$")
     private String surname;
     @Column(name = "Gender")
     private Boolean gender;

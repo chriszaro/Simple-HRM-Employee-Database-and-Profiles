@@ -31,34 +31,9 @@ public class UserProfileService {
         return repo.findById(user_id).orElse(null);
     }
 
-    public Boolean addUser(User user) {
-        // Data Validation
-        Pattern pattern = Pattern.compile("^[A-Za-z]+ ?-? ?[A-Za-z]*$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(user.getName());
-        boolean matchFound = matcher.find();
-        if (!matchFound) return false;
-        else {
-            matcher = pattern.matcher(user.getSurname());
-            matchFound = matcher.find();
-            if (!matchFound) return false;
-            else {
-                pattern = Pattern.compile("^[A-Za-z0-9 ,-]*$", Pattern.CASE_INSENSITIVE);
-                matcher = pattern.matcher(user.getAddress().getWorkAddress());
-                matchFound = matcher.find();
-                if (!matchFound) return false;
-                else {
-                    matcher = pattern.matcher(user.getAddress().getHomeAddress());
-                    matchFound = matcher.find();
-                    if (!matchFound) return false;
-                    else {
-                        // subtract 2 hours to get right day due to timezone problem
-                        user.setBirthday(Date.from(user.getBirthday().toInstant().plusSeconds(60 * 60 * 3)));
-                        repo.save(user);
-                        return true;
-                    }
-                }
-            }
-        }
+    public void addUser(User user) {
+        user.setBirthday(Date.from(user.getBirthday().toInstant().plusSeconds(60 * 60 * 3)));
+        repo.save(user);
     }
 
     public void updateUser(User user) {
@@ -69,3 +44,34 @@ public class UserProfileService {
         repo.deleteById(userId);
     }
 }
+
+
+//    public Boolean addUser(User user) {
+//        // Data Validation
+//        Pattern pattern = Pattern.compile("^[A-Za-z]+ ?-? ?[A-Za-z]*$", Pattern.CASE_INSENSITIVE);
+//        Matcher matcher = pattern.matcher(user.getName());
+//        boolean matchFound = matcher.find();
+//        if (!matchFound) return false;
+//        else {
+//            matcher = pattern.matcher(user.getSurname());
+//            matchFound = matcher.find();
+//            if (!matchFound) return false;
+//            else {
+//                pattern = Pattern.compile("^[A-Za-z0-9 ,-]*$", Pattern.CASE_INSENSITIVE);
+//                matcher = pattern.matcher(user.getAddress().getWorkAddress());
+//                matchFound = matcher.find();
+//                if (!matchFound) return false;
+//                else {
+//                    matcher = pattern.matcher(user.getAddress().getHomeAddress());
+//                    matchFound = matcher.find();
+//                    if (!matchFound) return false;
+//                    else {
+//                        // subtract 2 hours to get right day due to timezone problem
+//                        user.setBirthday(Date.from(user.getBirthday().toInstant().plusSeconds(60 * 60 * 3)));
+//                        repo.save(user);
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//    }

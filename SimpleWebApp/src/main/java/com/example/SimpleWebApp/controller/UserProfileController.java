@@ -2,9 +2,11 @@ package com.example.SimpleWebApp.controller;
 
 import com.example.SimpleWebApp.service.UserProfileService;
 import com.example.SimpleWebApp.model.User;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,11 +41,20 @@ public class UserProfileController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Boolean> addUser(@RequestPart User user) {
-        if (userProfileService.addUser(user))
-            return new ResponseEntity<>(HttpStatus.OK);
-        else
+    public ResponseEntity<Boolean> addUser(@RequestPart @Valid User user, BindingResult bindingResult) {
+        // code for validation with spring boot
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        userProfileService.addUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+        // code used with MY form validation
+//        if (userProfileService.addUser(user))
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        else
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/users")
