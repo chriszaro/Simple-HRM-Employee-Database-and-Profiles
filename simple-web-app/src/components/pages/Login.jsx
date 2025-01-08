@@ -43,10 +43,12 @@ export default function Login() {
             })
             // eslint-disable-next-line no-unused-vars
             .then((response) => {
-                localStorage.setItem("basicToken", btoa(str));
+                //localStorage.setItem("sessionToken", btoa(str));
+                console.log(response.data);
+                localStorage.setItem("sessionToken", response.data);
                 navigate('/');
             })
-            .catch((error) => {
+            .catch(() => {
                 console.log(JSON.stringify(credentials));
                 alert("Wrong credentials");
             })

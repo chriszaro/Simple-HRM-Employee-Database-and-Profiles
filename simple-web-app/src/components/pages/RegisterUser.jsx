@@ -9,7 +9,7 @@ import {useForm, Controller} from "react-hook-form";
 const RegisterUser = () => {
 
     useEffect(() => {
-        if (localStorage.getItem("basicToken") == null) {
+        if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
         }
     }, []);
@@ -106,13 +106,15 @@ const RegisterUser = () => {
             .post("http://localhost:8080/api/users", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                    // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                 },
             })
             .then(() => {
                 navigate('/users');
             })
             .catch(() => {
+                navigate("/logout");
                 console.log(JSON.stringify(user));
                 alert("Error adding user");
             })
@@ -120,7 +122,7 @@ const RegisterUser = () => {
 
     return (
         <>
-            {localStorage.getItem("basicToken") != null ? (
+            {localStorage.getItem("sessionToken") != null ? (
                 <>
                     <Nav direction="row"/>
                     <h2>Register User</h2>

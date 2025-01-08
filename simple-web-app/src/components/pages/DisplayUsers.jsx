@@ -12,17 +12,19 @@ const DisplayUsers = () => {
             .get("http://localhost:8080/api/users",
                 {
                     headers: {
-                        'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                        // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                     }
                 }
             )
             .then(res => setUsers(res.data))
             .catch((error) => {
+                navigate("/logout");
                 console.error("Error fetching users...", error);
             });
     }
     useEffect(() => {
-        if (localStorage.getItem("basicToken") == null) {
+        if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
         } else fetchUsers();
     }, [])
@@ -31,7 +33,7 @@ const DisplayUsers = () => {
 
     return (
         <>
-            {localStorage.getItem("basicToken") != null ? (
+            {localStorage.getItem("sessionToken") != null ? (
                 <>
                     <Nav direction="row"/>
                     <h2>Users</h2>

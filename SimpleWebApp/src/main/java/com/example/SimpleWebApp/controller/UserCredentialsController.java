@@ -21,7 +21,7 @@ public class UserCredentialsController {
 
     @PostMapping("/login")
     public String login(@RequestBody UserCredential user){
-        return "POST LOGIN";
+        return userCredentialsService.verify(user);
     }
 
     @GetMapping("/login")

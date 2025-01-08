@@ -14,17 +14,21 @@ const DisplayUser = () => {
             await axios
                 .get(`http://localhost:8080/api/users/${id}`, {
                     headers: {
-                        'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                        // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                     },
                 })
                 .then((response) => {
                     setUser(response.data);
                     setAddress(response.data.address);
                     setLoading(false);
-                }).catch((error) => console.error("Error fetching users...", error))
+                }).catch((error) => {
+                    navigate("/logout");
+                    console.error("Error fetching users...", error)
+                })
         }
 
-        if (localStorage.getItem("basicToken") == null) {
+        if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
         } else fetchUser();
     }, [])
@@ -35,11 +39,15 @@ const DisplayUser = () => {
         await axios
             .delete(`http://localhost:8080/api/users/${id}`, {
                 headers: {
-                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                    // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                 },
             })
             .then(() => navigate('/users'))
-            .catch((error) => console.error("Error deleting user:", error));
+            .catch((error) => {
+                navigate("/logout");
+                console.error("Error deleting user:", error);
+            })
     };
 
     const updateUser = async () => {
@@ -53,11 +61,14 @@ const DisplayUser = () => {
             .put("http://localhost:8080/api/users", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                    // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                 },
             }).then(() => alert("User Profile updated successfully"))
-            .catch((error) => console.error("Error updating user profile:", error));
-
+            .catch((error) => {
+                navigate("/logout");
+                console.error("Error updating user profile:", error)
+            });
     };
 
     const handleAddressInputChange = (e) => {
@@ -74,7 +85,7 @@ const DisplayUser = () => {
     }
 
     return (
-        <>{localStorage.getItem("basicToken") != null ? (<>
+        <>{localStorage.getItem("sessionToken") != null ? (<>
             <Nav direction="row"/>
             <h2>User Profile</h2>
             {!loading && (

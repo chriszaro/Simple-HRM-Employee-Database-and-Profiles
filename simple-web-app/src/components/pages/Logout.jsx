@@ -5,7 +5,7 @@ export default function Logout() {
 
     const navigate = useNavigate();
     useEffect(() => {
-        localStorage.removeItem("basicToken");
+        localStorage.removeItem("sessionToken");
         navigate("/")
     }, []);
 

@@ -6,14 +6,14 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("basicToken") == null) {
+        if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
         }
     }, []);
 
     return (
         <>
-            {localStorage.getItem("basicToken") != null ? (<Nav direction="column"/>) : null}
+            {localStorage.getItem("sessionToken") != null ? (<Nav direction="column"/>) : null}
         </>
     )
 }

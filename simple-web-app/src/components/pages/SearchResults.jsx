@@ -19,17 +19,21 @@ const SearchResults = () => {
         await axios
             .get(`http://localhost:8080/api/users/search?keyword=${keyword}`, {
                 headers: {
-                    'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                    // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                 },
             })
             .then((res) => setUsers(res.data))
-            .catch((error) => console.error("Error fetching users...", error))
+            .catch((error) => {
+                navigate("/logout");
+                console.error("Error fetching users...", error)
+            })
     }
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("basicToken") == null) {
+        if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
         }
         fetchUsers();
@@ -37,7 +41,7 @@ const SearchResults = () => {
 
     return (
         <>
-            {localStorage.getItem("basicToken") != null ? (
+            {localStorage.getItem("sessionToken") != null ? (
                 <>
                     <Nav direction="row"/>
                     <h2>Search Results for {keyword}</h2>

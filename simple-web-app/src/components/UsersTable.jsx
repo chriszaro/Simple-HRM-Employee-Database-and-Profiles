@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const UsersTable = ({data, refreshData}) => {
@@ -12,6 +12,8 @@ const UsersTable = ({data, refreshData}) => {
     useEffect(() => {
         setUsers(data)
     })
+
+    const navigate = useNavigate();
 
     const handleOpen = (id, name) => {
         setUserToDeleteId(id);
@@ -25,7 +27,8 @@ const UsersTable = ({data, refreshData}) => {
     const handleDelete = async () => {
         await axios.delete(`http://localhost:8080/api/users/${userToDeleteId}`, {
             headers: {
-                'Authorization': `Basic ${localStorage.getItem('basicToken')}`
+                // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
+                        'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
             },
         }).then(() => {
             refreshData();
@@ -33,6 +36,7 @@ const UsersTable = ({data, refreshData}) => {
             setUserToDeleteId(null);
             setUserToDelete(null);
         }).catch((error) => {
+            navigate("/logout");
             console.error("Error deleting user:", error);
         });
     };
