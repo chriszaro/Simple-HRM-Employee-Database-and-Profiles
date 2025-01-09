@@ -38,17 +38,16 @@ public class User {
     @Valid
     private Address address;
 
-    @Column(name = "Name")
     @Size(min=2, message="Name has to be at least 2 characters")
     @Pattern(regexp = "^[A-Za-z]+ ?-? ?[A-Za-z]*$")
     private String name;
-    @Column(name = "Surname")
+
     @Size(min=2, message="Surname has to be at least 2 characters")
     @Pattern(regexp = "^[A-Za-z]+ ?-? ?[A-Za-z]*$")
     private String surname;
-    @Column(name = "Gender")
+
     private Boolean gender;
-    @Column(name = "Birthday")
+
     private Date birthday;
 //    @Column(name = "Work Address")
 //    private String workAddress;
