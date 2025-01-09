@@ -37,7 +37,7 @@ const SearchResults = () => {
             navigate("/login");
         }
         fetchUsers();
-    }, [users]);
+    }, [searchParams]);
 
     return (
         <>
