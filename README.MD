@@ -12,6 +12,7 @@ MySQL8 database
 * Delete employee
 * Update employee addresses
 * Register new employee
+* Search keyword in name or surname of employees
 
 ## Dependencies used
 
