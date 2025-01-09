@@ -5,8 +5,7 @@ import com.example.SimpleWebApp.repository.UserProfileRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +22,11 @@ public class UserProfileService {
     }
 
     public List<User> search(String keyword) {
-        return repo.search(keyword);
+        HashSet<User> set = new HashSet<>();
+        set.addAll(repo.search(keyword));
+        set.addAll(repo.search2(keyword));
+        return new ArrayList<>(set);
+//        return repo.search(keyword);
     }
 
     public User getUserById(int user_id) {
