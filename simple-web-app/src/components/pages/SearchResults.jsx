@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import UserTable from "../UsersTable.jsx";
+import UserTable from "../DataTable.jsx";
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import Nav from "../Nav.jsx";
 

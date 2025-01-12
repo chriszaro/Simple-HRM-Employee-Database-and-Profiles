@@ -1,10 +1,10 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import UserTable from "../UsersTable.jsx";
+import UserTable from "../DataTable.jsx";
 import Nav from "../Nav.jsx";
 import {useNavigate} from "react-router-dom";
 
-const DisplayUsers = () => {
+const EmployeesList = () => {
     const [users, setUsers] = useState([]);
 
     const fetchUsers = async () => {
@@ -36,7 +36,7 @@ const DisplayUsers = () => {
             {localStorage.getItem("sessionToken") != null ? (
                 <>
                     <Nav direction="row"/>
-                    <h2>Users</h2>
+                    <h2>Employees</h2>
                     <UserTable data={users} refreshData={fetchUsers}/>
                 </>
             ) : null}
@@ -44,4 +44,4 @@ const DisplayUsers = () => {
     )
 }
 
-export default DisplayUsers;
+export default EmployeesList;

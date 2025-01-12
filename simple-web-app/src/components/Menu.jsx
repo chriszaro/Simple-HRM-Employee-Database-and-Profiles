@@ -3,18 +3,18 @@ import {Link} from "react-router-dom";
 export default function Menu(props) {
     return (
         <>
-            <h1>Simple Web App</h1>
+            <h1>Human Resources App</h1>
             <div className="menu" style={{flexDirection: props.direction}}>
                 <Link to="/">
                     <button className="menuButton">Home</button>
                 </Link>
 
                 <Link to="/users">
-                    <button className="menuButton">Display Users</button>
+                    <button className="menuButton">Display Employees</button>
                 </Link>
 
-                <Link to="/add_user">
-                    <button className="menuButton">Register new user</button>
+                <Link to="/add">
+                    <button className="menuButton">Add Employee</button>
                 </Link>
 
                 <Link to="/logout">

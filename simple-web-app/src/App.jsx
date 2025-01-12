@@ -1,8 +1,8 @@
 import './App.css'
-import './components/pages/DisplayUsers.jsx'
-import DisplayUsers from "./components/pages/DisplayUsers.jsx";
-import DisplayUser from "./components/pages/DisplayUser.jsx";
-import RegisterUser from "./components/pages/RegisterUser.jsx";
+import './components/pages/EmployeesList.jsx'
+import EmployeesList from "./components/pages/EmployeesList.jsx";
+import EmployeeProfile from "./components/pages/EmployeeProfile.jsx";
+import AddEmployee from "./components/pages/AddEmployee.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./components/pages/Home.jsx";
 import SearchResults from "./components/pages/SearchResults.jsx";
@@ -15,9 +15,9 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route exact path="/" element={<Home/>}></Route>
-                    <Route exact path="/users" element={<DisplayUsers/>}/>
-                    <Route exact path="/users/:id" element={<DisplayUser/>}/>
-                    <Route exact path="/add_user" element={<RegisterUser/>}/>
+                    <Route exact path="/users" element={<EmployeesList/>}/>
+                    <Route exact path="/users/:id" element={<EmployeeProfile/>}/>
+                    <Route exact path="/add" element={<AddEmployee/>}/>
                     <Route exact path="/search" element={<SearchResults/>}/>
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/logout" element={<Logout/>}/>

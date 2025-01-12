@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import Nav from "../Nav.jsx";
 
-const DisplayUser = () => {
+const EmployeeProfile = () => {
     const {id} = useParams();
     const [user, setUser] = useState([]);
     const [address, setAddress] = useState([]);
@@ -87,7 +87,7 @@ const DisplayUser = () => {
     return (
         <>{localStorage.getItem("sessionToken") != null ? (<>
             <Nav direction="row"/>
-            <h2>User Profile</h2>
+            <h2>Employee Profile</h2>
             {!loading && (
                 <>
                     <table className="center text-left">
@@ -146,4 +146,4 @@ const DisplayUser = () => {
     )
 }
 
-export default DisplayUser;
+export default EmployeeProfile;

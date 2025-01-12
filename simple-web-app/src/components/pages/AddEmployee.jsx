@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import Nav from "../Nav.jsx";
 import {useForm, Controller} from "react-hook-form";
 
-const RegisterUser = () => {
+const AddEmployee = () => {
 
     useEffect(() => {
         if (localStorage.getItem("sessionToken") == null) {
@@ -125,7 +125,7 @@ const RegisterUser = () => {
             {localStorage.getItem("sessionToken") != null ? (
                 <>
                     <Nav direction="row"/>
-                    <h2>Register User</h2>
+                    <h2>New Employee</h2>
                     <form onSubmit={handleSubmit(submitHandler)}>
                         <label htmlFor='name'>Name</label>
                         <br/>
@@ -198,7 +198,7 @@ const RegisterUser = () => {
                         <br/>
                         <span> {errors?.homeAddress && errors.homeAddress.message}</span>
                         <br/>
-                        <button type="submit">Register</button>
+                        <button type="submit">Add</button>
                     </form>
                 </>
             ) : null}
@@ -207,4 +207,4 @@ const RegisterUser = () => {
     )
 }
 
-export default RegisterUser;
+export default AddEmployee;

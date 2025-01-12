@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-const UsersTable = ({data, refreshData}) => {
+const DataTable = ({data, refreshData}) => {
     const [users, setUsers] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [userToDeleteId, setUserToDeleteId] = useState(null);
@@ -85,4 +85,4 @@ const UsersTable = ({data, refreshData}) => {
     )
 }
 
-export default UsersTable;
+export default DataTable;
