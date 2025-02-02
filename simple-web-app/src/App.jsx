@@ -8,6 +8,7 @@ import Home from "./components/pages/Home.jsx";
 import SearchResults from "./components/pages/SearchResults.jsx";
 import Login from "./components/pages/Login.jsx";
 import Logout from "./components/pages/Logout.jsx";
+import SignUp from "./components/pages/SignUp.jsx";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route exact path="/search" element={<SearchResults/>}/>
                     <Route exact path="/login" element={<Login/>}/>
                     <Route exact path="/logout" element={<Logout/>}/>
+                    <Route exact path="/sign_up" element={<SignUp/>}/>
                     <Route path="/*" element={<Home/>}></Route>
                 </Routes>
             </BrowserRouter>

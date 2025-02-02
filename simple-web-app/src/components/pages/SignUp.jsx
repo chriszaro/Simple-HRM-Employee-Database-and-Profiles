@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 
-export default function Login() {
+export default function SignUp() {
 
     const {register, handleSubmit, control, setValue, formState: {errors}} = useForm();
 
@@ -33,7 +33,7 @@ export default function Login() {
         credentials.password = data.password;
 
         axios
-            .post("http://localhost:8080/api/login", credentials, {
+            .post("http://localhost:8080/api/create_credentials", credentials, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -42,22 +42,22 @@ export default function Login() {
             .then((response) => {
                 //localStorage.setItem("sessionToken", btoa(str));
                 console.log(response.data);
-                localStorage.setItem("sessionToken", response.data);
-                navigate('/');
+                //localStorage.setItem("sessionToken", response.data);
+                navigate('/login');
             })
             .catch(() => {
                 console.log(JSON.stringify(credentials));
-                alert("Wrong credentials");
+                alert("error");
             })
     }
 
-    const goToSignup = () => {
-        navigate("/sign_up");
+    const goToLogin = () => {
+        navigate("/login");
     }
 
     return (
         <>
-            <h2>Log in</h2>
+            <h2>Sign up</h2>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <label htmlFor='username'>Username</label>
                 <br/>
@@ -67,9 +67,9 @@ export default function Login() {
                 <br/>
                 <input type='password' name='password' {...register("password", registerOptions.password)}/>
                 <br/>
-                <button type='submit'>Log in</button>
+                <button type='submit'>Sign up</button>
             </form>
-            <button onClick={goToSignup} style={{background:"none", color:"pink"}}>Sign up</button>
+            <button onClick={goToLogin} style={{background:"none", color:"pink"}}>Log in</button>
         </>
     )
 }
