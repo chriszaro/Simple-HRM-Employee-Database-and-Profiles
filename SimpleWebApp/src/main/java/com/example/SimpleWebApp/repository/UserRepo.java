@@ -1,8 +1,8 @@
 package com.example.SimpleWebApp.repository;
 
-import com.example.SimpleWebApp.model.UserCredential;
+import com.example.SimpleWebApp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserCredentialRepo extends JpaRepository<UserCredential, Integer> {
-    UserCredential findByUsername(String username);
+public interface UserRepo extends JpaRepository<User, Integer> {
+    User findByUsername(String username);
 }

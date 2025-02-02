@@ -19,10 +19,10 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "addr_id")
     private int addressId;
-    @Column(name = "Work Address")
+    @Column(name = "work_address")
     @Pattern(regexp = "^[A-Za-z0-9 ,-]*$")
     private String workAddress;
-    @Column(name = "Home Address")
+    @Column(name = "home_address")
     @Pattern(regexp = "^[A-Za-z0-9 ,-]*$")
     private String homeAddress;
 

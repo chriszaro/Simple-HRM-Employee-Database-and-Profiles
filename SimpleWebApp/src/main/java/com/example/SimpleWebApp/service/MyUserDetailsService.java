@@ -1,8 +1,8 @@
 package com.example.SimpleWebApp.service;
 
-import com.example.SimpleWebApp.model.UserCredential;
+import com.example.SimpleWebApp.model.User;
 import com.example.SimpleWebApp.model.UserPrincipal;
-import com.example.SimpleWebApp.repository.UserCredentialRepo;
+import com.example.SimpleWebApp.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserCredentialRepo repo;
+    private UserRepo repo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserCredential user = repo.findByUsername(username);
+        User user = repo.findByUsername(username);
 
         if (user == null){
             System.out.println("User not found");

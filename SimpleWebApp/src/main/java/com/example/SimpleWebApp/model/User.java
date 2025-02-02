@@ -9,21 +9,19 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Transactional
-@Table(name = "userCredentials")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCredential {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userC_id")
-    private int userCId;
+    @Column(name = "user_id")
+    private int userId;
 
 //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-//    @JoinColumn(name="fk_user_id", referencedColumnName = "user_id")
-//    private User user;
+//    @JoinColumn(name="fk_employee_id", referencedColumnName = "employee_id")
+//    private Employee employee;
 
-    @Column(name = "Username")
     private String username;
-    @Column(name = "Password")
     private String password;
 }

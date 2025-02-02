@@ -1,7 +1,7 @@
 package com.example.SimpleWebApp.controller;
 
-import com.example.SimpleWebApp.service.UserProfileService;
-import com.example.SimpleWebApp.model.User;
+import com.example.SimpleWebApp.model.Employee;
+import com.example.SimpleWebApp.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +15,10 @@ import java.util.List;
 // https://rajendraprasadpadma.medium.com/what-the-cors-ft-spring-boot-spring-security-562f24d705c9
 @CrossOrigin(origins="http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/api")
-public class UserProfileController {
+public class EmployeeController {
 
     @Autowired
-    UserProfileService userProfileService;
+    EmployeeService employeeService;
 
     @GetMapping("/")
     public String greet() {
@@ -26,28 +26,28 @@ public class UserProfileController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getUsers() {
-        return new ResponseEntity<>(userProfileService.getUsers(), HttpStatus.OK);
+    public ResponseEntity<List<Employee>> getUsers() {
+        return new ResponseEntity<>(employeeService.getUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/users/{user_id}")
-    public ResponseEntity<User> getUserById(@PathVariable int user_id) {
-        User user = userProfileService.getUserById(user_id);
+    public ResponseEntity<Employee> getUserById(@PathVariable int user_id) {
+        Employee employee = employeeService.getUserById(user_id);
 
-        if (user != null)
-            return new ResponseEntity<>(userProfileService.getUserById(user_id), HttpStatus.OK);
+        if (employee != null)
+            return new ResponseEntity<>(employeeService.getUserById(user_id), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Boolean> addUser(@RequestPart @Valid User user, BindingResult bindingResult) {
+    public ResponseEntity<Boolean> addUser(@RequestPart @Valid Employee employee, BindingResult bindingResult) {
         // code for validation with spring boot
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        userProfileService.addUser(user);
+        employeeService.addUser(employee);
         return new ResponseEntity<>(HttpStatus.OK);
 
         // code used with MY form validation
@@ -58,18 +58,18 @@ public class UserProfileController {
     }
 
     @PutMapping("/users")
-    public void updateUser(@RequestPart User user) {
-        userProfileService.updateUser(user);
+    public void updateUser(@RequestPart Employee employee) {
+        employeeService.updateUser(employee);
     }
 
     @DeleteMapping("/users/{user_id}")
     public void deleteUser(@PathVariable int user_id) {
-        userProfileService.deleteUser(user_id);
+        employeeService.deleteUser(user_id);
     }
 
     @GetMapping("/users/search")
-    public ResponseEntity<List<User>> search(@RequestParam String keyword) {
+    public ResponseEntity<List<Employee>> search(@RequestParam String keyword) {
         System.out.println("Request received");
-        return new ResponseEntity<>(userProfileService.search(keyword), HttpStatus.OK);
+        return new ResponseEntity<>(employeeService.search(keyword), HttpStatus.OK);
     }
 }

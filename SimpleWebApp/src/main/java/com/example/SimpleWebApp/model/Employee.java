@@ -13,13 +13,13 @@ import java.util.Date;
 @Entity
 @Data
 @Transactional
-@Table(name = "user")
+@Table(name = "employee")
 @AllArgsConstructor
-public class User {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private int userId;
+    @Column(name = "employee_id")
+    private int employeeId;
 
     // orphanRemoval -> if address is set to null,
     // the address record that was previously associated
@@ -55,11 +55,11 @@ public class User {
 //    private String homeAddress;
 
     // Necessary for POST request add new user
-    public User() {
+    public Employee() {
     }
 
-    public User(int userId, String name, String surname, Boolean gender, Date birthday) {
-        this.userId = userId;
+    public Employee(int employeeId, String name, String surname, Boolean gender, Date birthday) {
+        this.employeeId = employeeId;
         this.name = name;
         this.surname = surname;
         this.gender = gender;
