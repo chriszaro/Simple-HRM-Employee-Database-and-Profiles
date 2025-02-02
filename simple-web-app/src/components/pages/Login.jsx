@@ -56,7 +56,7 @@ export default function Login() {
 
     return (
         <>
-            <h2>Login</h2>
+            <h2>Log in</h2>
             <form onSubmit={handleSubmit(submitHandler)}>
                 <label htmlFor='username'>Username</label>
                 <br/>
@@ -66,8 +66,9 @@ export default function Login() {
                 <br/>
                 <input type='password' name='password' {...register("password", registerOptions.password)}/>
                 <br/>
-                <button type='submit'>Login</button>
+                <button type='submit'>Log in</button>
             </form>
+            <button >Sign up</button>
         </>
     )
 }

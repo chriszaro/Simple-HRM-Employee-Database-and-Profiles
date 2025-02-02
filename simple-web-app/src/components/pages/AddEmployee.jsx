@@ -31,7 +31,7 @@ const AddEmployee = () => {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const [user, setUser] = useState({
+    const [employee, setEmployee] = useState({
         name: "",
         surname: "",
         gender: "false",
@@ -55,11 +55,11 @@ const AddEmployee = () => {
     //     //console.log({name, value});
     //
     //     // Update UI
-    //     setUser({...user, [name]: value});
+    //     setUser({...employee, [name]: value});
     //     // Update data to be ready for submission
-    //     user[name] = value;
+    //     employee[name] = value;
     //
-    //     //console.log(user);
+    //     //console.log(employee);
     // }
 
     // const handleAddressInputChange = (e) => {
@@ -70,7 +70,7 @@ const AddEmployee = () => {
     //     setAddress({...address, [name]: value});
     //     // Update data to be ready for submission
     //     address[name] = value;
-    //     user.address = address;
+    //     employee.address = address;
     //
     //     // console.log(address);
     // }
@@ -82,7 +82,7 @@ const AddEmployee = () => {
         // Update UI
         setSelectedDate(value);
         // // Update data to be ready for submission
-        // user.birthday = value;
+        // employee.birthday = value;
     }
 
     const submitHandler = (data) => {
@@ -90,17 +90,17 @@ const AddEmployee = () => {
 
         address.workAddress = data.workAddress;
         address.homeAddress = data.homeAddress;
-        user.address = address;
+        employee.address = address;
 
-        user.gender = data.gender;
-        user.name = data.name;
-        user.surname = data.surname;
-        user.birthday = data.birthday;
+        employee.gender = data.gender;
+        employee.name = data.name;
+        employee.surname = data.surname;
+        employee.birthday = data.birthday;
 
         const formData = new FormData();
         formData.append(
-            "user",
-            new Blob([JSON.stringify(user)], {type: "application/json"})
+            "employee",
+            new Blob([JSON.stringify(employee)], {type: "application/json"})
         );
         axios
             .post("http://localhost:8080/api/users", formData, {
@@ -115,8 +115,8 @@ const AddEmployee = () => {
             })
             .catch(() => {
                 navigate("/logout");
-                console.log(JSON.stringify(user));
-                alert("Error adding user");
+                console.log(JSON.stringify(employee));
+                alert("Error adding employee");
             })
     }
 

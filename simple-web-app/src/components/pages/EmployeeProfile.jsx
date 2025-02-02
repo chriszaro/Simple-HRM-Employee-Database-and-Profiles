@@ -5,12 +5,12 @@ import Nav from "../Nav.jsx";
 
 const EmployeeProfile = () => {
     const {id} = useParams();
-    const [user, setUser] = useState([]);
+    const [employee, setEmployee] = useState([]);
     const [address, setAddress] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchUser = async () => {
+        const fetchData = async () => {
             await axios
                 .get(`http://localhost:8080/api/users/${id}`, {
                     headers: {
@@ -19,7 +19,7 @@ const EmployeeProfile = () => {
                     },
                 })
                 .then((response) => {
-                    setUser(response.data);
+                    setEmployee(response.data);
                     setAddress(response.data.address);
                     setLoading(false);
                 }).catch((error) => {
@@ -30,12 +30,12 @@ const EmployeeProfile = () => {
 
         if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
-        } else fetchUser();
+        } else fetchData();
     }, [])
 
     const navigate = useNavigate();
 
-    const deleteUser = async () => {
+    const deleteEmployee = async () => {
         await axios
             .delete(`http://localhost:8080/api/users/${id}`, {
                 headers: {
@@ -50,11 +50,11 @@ const EmployeeProfile = () => {
             })
     };
 
-    const updateUser = async () => {
+    const updateEmployee = async () => {
         const formData = new FormData();
         formData.append(
-            "user",
-            new Blob([JSON.stringify(user)], {type: "application/json"})
+            "employee",
+            new Blob([JSON.stringify(employee)], {type: "application/json"})
         );
 
         await axios
@@ -64,7 +64,7 @@ const EmployeeProfile = () => {
                     // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
                         'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                 },
-            }).then(() => alert("User Profile updated successfully"))
+            }).then(() => alert("Employee Profile updated successfully"))
             .catch((error) => {
                 navigate("/logout");
                 console.error("Error updating user profile:", error)
@@ -79,7 +79,7 @@ const EmployeeProfile = () => {
         setAddress({...address, [name]: value});
         // Update data to be ready for submission
         address[name] = value;
-        user.address = address;
+        employee.address = address;
 
         // console.log(address);
     }
@@ -94,19 +94,19 @@ const EmployeeProfile = () => {
                         <tbody>
                         <tr>
                             <th>Name</th>
-                            <td>{user.name}</td>
+                            <td>{employee.name}</td>
                         </tr>
                         <tr>
                             <th>Surname</th>
-                            <td>{user.surname}</td>
+                            <td>{employee.surname}</td>
                         </tr>
                         <tr>
                             <th>Gender</th>
-                            <td>{(user.gender == 0) ? "M" : "F"}</td>
+                            <td>{(employee.gender == 0) ? "M" : "F"}</td>
                         </tr>
                         <tr>
                             <th>Birthday</th>
-                            <td>{new Date(user.birthday).toLocaleDateString('en-GB', {
+                            <td>{new Date(employee.birthday).toLocaleDateString('en-GB', {
                                 day: '2-digit',
                                 month: '2-digit',
                                 year: 'numeric'
@@ -134,10 +134,10 @@ const EmployeeProfile = () => {
                         </tr>
                         </tbody>
                     </table>
-                    <button onClick={updateUser}
+                    <button onClick={updateEmployee}
                             style={{margin: '1em'}}>Update
                     </button>
-                    <button onClick={deleteUser}
+                    <button onClick={deleteEmployee}
                             className="deleteButton">Delete
                     </button>
                 </>

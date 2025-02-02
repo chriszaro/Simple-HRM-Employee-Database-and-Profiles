@@ -5,7 +5,7 @@ import {useNavigate, useSearchParams} from 'react-router-dom';
 import Nav from "../Nav.jsx";
 
 const SearchResults = () => {
-    const [users, setUsers] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [searchParams] = useSearchParams();
     const sanitizeInput = (input) => {
         // Regular expression to match special characters and other potentially dangerous characters
@@ -15,7 +15,7 @@ const SearchResults = () => {
 
     const keyword = sanitizeInput(searchParams.get('keyword'));
 
-    const fetchUsers = async () => {
+    const fetchData = async () => {
         await axios
             .get(`http://localhost:8080/api/users/search?keyword=${keyword}`, {
                 headers: {
@@ -23,10 +23,10 @@ const SearchResults = () => {
                         'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
                 },
             })
-            .then((res) => setUsers(res.data))
+            .then((res) => setEmployees(res.data))
             .catch((error) => {
                 navigate("/logout");
-                console.error("Error fetching users...", error)
+                console.error("Error fetching employees...", error)
             })
     }
 
@@ -36,7 +36,7 @@ const SearchResults = () => {
         if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
         }
-        fetchUsers();
+        fetchData();
     }, [searchParams]);
 
     return (
@@ -45,7 +45,7 @@ const SearchResults = () => {
                 <>
                     <Nav direction="row"/>
                     <h2>Search Results for {keyword}</h2>
-                    <UserTable data={users} refreshData={fetchUsers}/>
+                    <UserTable data={employees} refreshData={fetchData}/>
                 </>
             ) : null}
         </>

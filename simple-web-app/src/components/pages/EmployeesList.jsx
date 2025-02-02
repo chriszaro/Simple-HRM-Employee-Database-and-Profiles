@@ -5,9 +5,9 @@ import Nav from "../Nav.jsx";
 import {useNavigate} from "react-router-dom";
 
 const EmployeesList = () => {
-    const [users, setUsers] = useState([]);
+    const [employees, setEmployees] = useState([]);
 
-    const fetchUsers = async () => {
+    const fetchData = async () => {
         await axios
             .get("http://localhost:8080/api/users",
                 {
@@ -17,16 +17,16 @@ const EmployeesList = () => {
                     }
                 }
             )
-            .then(res => setUsers(res.data))
+            .then(res => setEmployees(res.data))
             .catch((error) => {
                 navigate("/logout");
-                console.error("Error fetching users...", error);
+                console.error("Error fetching employees...", error);
             });
     }
     useEffect(() => {
         if (localStorage.getItem("sessionToken") == null) {
             navigate("/login");
-        } else fetchUsers();
+        } else fetchData();
     }, [])
 
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ const EmployeesList = () => {
                 <>
                     <Nav direction="row"/>
                     <h2>Employees</h2>
-                    <UserTable data={users} refreshData={fetchUsers}/>
+                    <UserTable data={employees} refreshData={fetchData}/>
                 </>
             ) : null}
         </>

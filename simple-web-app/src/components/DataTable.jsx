@@ -4,20 +4,20 @@ import {Link, useNavigate} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const DataTable = ({data, refreshData}) => {
-    const [users, setUsers] = useState([]);
+    const [employees, setEmployees] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [userToDeleteId, setUserToDeleteId] = useState(null);
-    const [userToDelete, setUserToDelete] = useState(null);
+    const [employeeToDeleteId, setEmployeeToDeleteId] = useState(null);
+    const [employeeToDelete, setEmployeeToDelete] = useState(null);
 
     useEffect(() => {
-        setUsers(data)
+        setEmployees(data)
     })
 
     const navigate = useNavigate();
 
     const handleOpen = (id, name) => {
-        setUserToDeleteId(id);
-        setUserToDelete(name);
+        setEmployeeToDeleteId(id);
+        setEmployeeToDelete(name);
         setIsOpen(true);
     }
     const handleCancel = () => {
@@ -25,7 +25,7 @@ const DataTable = ({data, refreshData}) => {
     }
 
     const handleDelete = async () => {
-        await axios.delete(`http://localhost:8080/api/users/${userToDeleteId}`, {
+        await axios.delete(`http://localhost:8080/api/users/${employeeToDeleteId}`, {
             headers: {
                 // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
                         'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
@@ -33,8 +33,8 @@ const DataTable = ({data, refreshData}) => {
         }).then(() => {
             refreshData();
             setIsOpen(false);
-            setUserToDeleteId(null);
-            setUserToDelete(null);
+            setEmployeeToDeleteId(null);
+            setEmployeeToDelete(null);
         }).catch((error) => {
             navigate("/logout");
             console.error("Error deleting user:", error);
@@ -50,18 +50,18 @@ const DataTable = ({data, refreshData}) => {
                     <th>Surname</th>
                 </tr>
                 {
-                    users.map((user) => (
-                            <tr key={user.userId}>
-                                <td><Link to={`/users/${user.userId}`}>{user.name}</Link></td>
-                                <td><Link to={`/users/${user.userId}`}>{user.surname}</Link></td>
+                    employees.map((employee) => (
+                            <tr key={employee.employeeId}>
+                                <td><Link to={`/users/${employee.employeeId}`}>{employee.name}</Link></td>
+                                <td><Link to={`/users/${employee.employeeId}`}>{employee.surname}</Link></td>
                                 <td>
-                                    <Link to={`/users/${user.userId}`}>
+                                    <Link to={`/users/${employee.employeeId}`}>
                                         <button>View Profile</button>
                                     </Link>
                                 </td>
                                 <td>
                                     <button onClick={() => {
-                                        handleOpen(user.userId, user.name + " " + user.surname);
+                                        handleOpen(employee.employeeId, employee.name + " " + employee.surname);
                                     }}>Delete
                                     </button>
                                 </td>
@@ -73,7 +73,7 @@ const DataTable = ({data, refreshData}) => {
             </table>
             {isOpen && (
                 <div className="popup">
-                    <div><p>Are you sure you want to delete <span style={{fontWeight: 'bold'}}>{userToDelete}</span> ?
+                    <div><p>Are you sure you want to delete <span style={{fontWeight: 'bold'}}>{employeeToDelete}</span> ?
                     </p></div>
                     <div className="button-container">
                         <button onClick={handleDelete} className="deleteButton">Delete</button>
