@@ -74,6 +74,8 @@ public class SecurityConfig {
                         request
                                 .requestMatchers("/api/login/**")
                                 .permitAll()
+                                .requestMatchers("/api/create_credentials/**")
+                                .permitAll()
                                 .anyRequest()
                                 .authenticated());
 
