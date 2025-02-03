@@ -9,7 +9,7 @@ export default function Menu(props) {
                     <button className="menuButton">Home</button>
                 </Link>
 
-                <Link to="/users">
+                <Link to="/employees">
                     <button className="menuButton">Display Employees</button>
                 </Link>
 

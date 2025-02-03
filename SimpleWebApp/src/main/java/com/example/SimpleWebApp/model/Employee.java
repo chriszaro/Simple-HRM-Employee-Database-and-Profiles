@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -49,10 +50,14 @@ public class Employee {
     private Boolean gender;
 
     private Date birthday;
-//    @Column(name = "Work Address")
-//    private String workAddress;
-//    @Column(name = "Home Address")
-//    private String homeAddress;
+
+    private String resumeFileName;
+
+    private String resumeFileType;
+
+    //Large object annotation
+    @Lob
+    private byte[] resumeFile;
 
     // Necessary for POST request add new user
     public Employee() {

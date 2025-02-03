@@ -19,7 +19,7 @@ export default function SignUp() {
         }
     }
 
-    const [credentials, setCredentials] = useState({
+    const [credentials] = useState({
         username: "",
         password: "",
     });

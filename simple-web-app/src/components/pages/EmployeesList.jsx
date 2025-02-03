@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import UserTable from "../DataTable.jsx";
+import DataTable from "../DataTable.jsx";
 import Nav from "../Nav.jsx";
 import {useNavigate} from "react-router-dom";
 
@@ -9,7 +9,7 @@ const EmployeesList = () => {
 
     const fetchData = async () => {
         await axios
-            .get("http://localhost:8080/api/users",
+            .get("http://localhost:8080/api/employees",
                 {
                     headers: {
                         // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
@@ -37,7 +37,7 @@ const EmployeesList = () => {
                 <>
                     <Nav direction="row"/>
                     <h2>Employees</h2>
-                    <UserTable data={employees} refreshData={fetchData}/>
+                    <DataTable data={employees} refreshData={fetchData}/>
                 </>
             ) : null}
         </>

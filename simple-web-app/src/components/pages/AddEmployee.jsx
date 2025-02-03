@@ -103,7 +103,7 @@ const AddEmployee = () => {
             new Blob([JSON.stringify(employee)], {type: "application/json"})
         );
         axios
-            .post("http://localhost:8080/api/users", formData, {
+            .post("http://localhost:8080/api/employees", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
@@ -111,7 +111,7 @@ const AddEmployee = () => {
                 },
             })
             .then(() => {
-                navigate('/users');
+                navigate('/employees');
             })
             .catch(() => {
                 navigate("/logout");

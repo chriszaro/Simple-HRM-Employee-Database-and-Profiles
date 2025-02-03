@@ -52,10 +52,10 @@ const DataTable = ({data, refreshData}) => {
                 {
                     employees.map((employee) => (
                             <tr key={employee.employeeId}>
-                                <td><Link to={`/users/${employee.employeeId}`}>{employee.name}</Link></td>
-                                <td><Link to={`/users/${employee.employeeId}`}>{employee.surname}</Link></td>
+                                <td><Link to={`/employees/${employee.employeeId}`}>{employee.name}</Link></td>
+                                <td><Link to={`/employees/${employee.employeeId}`}>{employee.surname}</Link></td>
                                 <td>
-                                    <Link to={`/users/${employee.employeeId}`}>
+                                    <Link to={`/employees/${employee.employeeId}`}>
                                         <button>View Profile</button>
                                     </Link>
                                 </td>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
-import UserTable from "../DataTable.jsx";
+import DataTable from "../DataTable.jsx";
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import Nav from "../Nav.jsx";
 
@@ -17,7 +17,7 @@ const SearchResults = () => {
 
     const fetchData = async () => {
         await axios
-            .get(`http://localhost:8080/api/users/search?keyword=${keyword}`, {
+            .get(`http://localhost:8080/api/employees/search?keyword=${keyword}`, {
                 headers: {
                     // 'Authorization': `Basic ${localStorage.getItem('sessionToken')}`
                         'Authorization': `Bearer ${localStorage.getItem('sessionToken')}`
@@ -45,7 +45,7 @@ const SearchResults = () => {
                 <>
                     <Nav direction="row"/>
                     <h2>Search Results for {keyword}</h2>
-                    <UserTable data={employees} refreshData={fetchData}/>
+                    <DataTable data={employees} refreshData={fetchData}/>
                 </>
             ) : null}
         </>

@@ -4,7 +4,9 @@ import com.example.SimpleWebApp.model.Employee;
 import com.example.SimpleWebApp.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -15,7 +17,7 @@ public class EmployeeService {
 
 //    private ArrayList<User> users = new ArrayList<>(Arrays.asList(new User(1, "Christodoulos", "Zarogiannis", "M", "2002-04-15"), new User(2, "Christos", "Mouratidis", "M", "2002-08-02")));
 
-    public List<Employee> getUsers() {
+    public List<Employee> getEmployees() {
         return repo.findAll();
     }
 
@@ -27,21 +29,27 @@ public class EmployeeService {
 //        return repo.search(keyword);
     }
 
-    public Employee getUserById(int user_id) {
-        //return users.stream().filter(user -> user.getUser_id() == user_id).findFirst().get();
-        return repo.findById(user_id).orElse(null);
+    public Employee getEmployeeById(int employeeId) {
+        //return users.stream().filter(user -> user.getUser_id() == employeeId).findFirst().get();
+        return repo.findById(employeeId).orElse(null);
     }
 
-    public void addUser(Employee employee) {
+    public void addEmployee(Employee employee) {
         employee.setBirthday(Date.from(employee.getBirthday().toInstant().plusSeconds(60 * 60 * 3)));
         repo.save(employee);
     }
 
-    public void updateUser(Employee employee) {
-        repo.save(employee);
+    public Employee updateEmployee(Employee employee, MultipartFile resumeFile) throws IOException {
+        employee.setResumeFile(resumeFile.getBytes());
+        employee.setResumeFileName(resumeFile.getOriginalFilename());
+        employee.setResumeFileType(resumeFile.getContentType());
+        return repo.save(employee);
+    }
+    public Employee updateEmployee(Employee employee) {
+        return repo.save(employee);
     }
 
-    public void deleteUser(int userId) {
+    public void deleteEmployee(int userId) {
         repo.deleteById(userId);
     }
 }
